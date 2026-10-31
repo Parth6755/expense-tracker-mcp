@@ -1,18 +1,17 @@
-
+from fastmcp import FastMCP
 import os
-import json
 import sqlite3
 import aiosqlite
-from fastmcp import FastMCP
+from pathlib import Path
 
-# --------------------------------
-# 1. Database configuration
-# --------------------------------
+# Cloud-compatible writable database directory
+DATA_DIR = Path(os.environ.get("DATA_DIR", "/tmp/expense-tracker"))
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-DB_PATH = os.path.join(BASE_DIR, "expenses.db")
-CATEGORIES_PATH = os.path.join(BASE_DIR, "categories.json")
+DB_PATH = str(DATA_DIR / "expenses.db")
+
+CATEGORIES_PATH = Path(__file__).parent / "categories.json"
 
 print(f"Database path: {DB_PATH}")
 
